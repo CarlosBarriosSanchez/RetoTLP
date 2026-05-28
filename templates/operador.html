@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Panel operador — ArenaBet Perú{% endblock %}
+{% block content %}
+<section class="operator-hero">
+  <div>
+    <p class="hero-badge">Back-office · solo staff</p>
+    <h1>Panel del operador</h1>
+    <p>Métricas GGR, exposición por evento, auditoría SHA256, alertas anti-fraude y reporte CSV.</p>
+  </div>
+  <div class="operator-hero-chip">
+    <span>Modo operador</span>
+    <strong>Control y cumplimiento</strong>
+  </div>
+</section>
+
+<div id="operador-alerts"></div>
+
+<div id="operador-denied" class="alert alert-warning hidden">
+  Acceso restringido. Inicia sesión con un usuario <strong>staff</strong> (ej. <code>admin</code> en Django admin).
+</div>
+
+<div id="operador-panel" class="hidden">
+  <div class="grid-2">
+    <section class="card card-highlight operator-kpi">
+      <h2>GGR del periodo</h2>
+      <p class="saldo-grande"><span id="metric-ggr" class="monto-destacado">—</span></p>
+      <p class="form-hint">Gross Gaming Revenue = apuestas − pagos a ganadores</p>
+    </section>
+    <section class="card operator-kpi">
+      <h2>Resumen</h2>
+      <ul class="metric-list" id="metric-resumen"></ul>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2>Exposición por evento</h2>
+    <p class="form-hint">Cuánto perdería la casa si gana cada selección (apuestas aceptadas).</p>
+    <div id="exposure-list"></div>
+  </section>
+
+  <section class="card">
+    <h2>Auditoría inmutable</h2>
+    <p id="audit-status" class="form-hint">Pulsa verificar para comprobar la cadena SHA256.</p>
+    <button type="button" id="btn-verificar-audit" class="btn btn-secondary btn-sm">Verificar cadena hash</button>
+  </section>
+
+  <section class="card">
+    <h2>Alertas anti-fraude</h2>
+    <ul id="alertas-list" class="combi-legs"></ul>
+  </section>
+
+  <section class="card">
+    <h2>Reporte MINCETUR (CSV)</h2>
+    <form id="form-reporte" class="grid-2" style="align-items: end;">
+      <div class="form-group">
+        <label for="reporte-anio">Año</label>
+        <input id="reporte-anio" type="number" min="2024" max="2030" value="2026">
+      </div>
+      <div class="form-group">
+        <label for="reporte-mes">Mes</label>
+        <input id="reporte-mes" type="number" min="1" max="12" value="5">
+      </div>
+      <button type="submit" class="btn btn-primary">Descargar CSV</button>
+    </form>
+  </section>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'js/fairbet-operador.js' %}"></script>
+{% endblock %}
