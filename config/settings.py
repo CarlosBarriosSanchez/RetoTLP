@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     "apps.users",
     "apps.wallet",
     "apps.betting",
-    "apps.audit",
+    "apps.audit.apps.AuditConfig",
 ]
 
 MIDDLEWARE = [
@@ -38,6 +38,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "apps.audit.middleware.ClientIPMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -102,9 +103,10 @@ CHANNEL_LAYERS = {
 }
 
 REST_FRAMEWORK = {
+    # Solo Token: la interfaz web usa Authorization: Token …
+    # (SessionAuthentication exigía CSRF y bloqueaba el registro si habías entrado al /admin/)
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
@@ -121,6 +123,13 @@ REST_FRAMEWORK = {
 # Límites de apuesta (avance)
 BET_STAKE_MIN = Decimal("1.0000")
 BET_STAKE_MAX = Decimal("500.0000")
+
+# Nivel 2 — cash-out y mercados en vivo
+CASHOUT_FACTOR_CASA = Decimal("0.9500")
+MERCADO_SUSPENSION_SEGUNDOS = config("MERCADO_SUSPENSION_SEGUNDOS", default=30, cast=int)
+MARGEN_OPERADOR_DEFAULT = Decimal("0.0500")  # 5 % sobre probabilidad implícita (demo)
+BONO_BIENVENIDA_MONTO = Decimal("25.0000")
+BONO_BIENVENIDA_ROLLOVER_X = Decimal("3.0000")
 
 TEMPLATES = [
     {
