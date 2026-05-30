@@ -1,5 +1,6 @@
 FROM python:3.12-slim-bookworm
 
+# Imagen base para web, celery y channels (mismo Dockerfile, distinto command en compose)
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 

@@ -1,10 +1,18 @@
 # FairBet Lab — entorno completo del challenge
-# Uso: docker compose up -d --build
 #
-# Nombre del proyecto en Docker Desktop (no depende del nombre de la carpeta):
+# Arranque rápido:
+#   cp .env.example .env
+#   docker compose up -d --build
+#
+# URLs locales:
+#   Web (páginas + API)  → http://localhost:8000
+#   WebSockets (cuotas)  → ws://localhost:8001
+#
+# Nombre visible en Docker Desktop:
 name: simulador-apuestas-deportivas
 
 services:
+  # --- Persistencia ---
   db:
     image: postgres:16-alpine
     environment:
@@ -21,6 +29,7 @@ services:
       timeout: 5s
       retries: 5
 
+  # --- Cache, Celery y Channels ---
   redis:
     image: redis:7-alpine
     ports:
@@ -31,6 +40,7 @@ services:
       timeout: 3s
       retries: 5
 
+  # --- Aplicación Django (HTTP) ---
   web:
     build: .
     command: >
@@ -48,6 +58,7 @@ services:
       redis:
         condition: service_healthy
 
+  # --- Tareas en segundo plano ---
   celery:
     build: .
     command: >
@@ -82,6 +93,7 @@ services:
       web:
         condition: service_started
 
+  # --- WebSockets para cuotas en vivo (Daphne) ---
   channels:
     build: .
     command: daphne -b 0.0.0.0 -p 8001 config.asgi:application
