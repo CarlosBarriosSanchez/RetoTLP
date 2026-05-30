@@ -27,8 +27,8 @@ postgres_data/
 
 
 # Documentación
-# docs/
-# README.md
-# readme.md
-# README
+docs/
+README.md
+readme.md
+README
 #al final de trabajo descomentar la sección de documentación para que no se suba a git, pero si se deje en el proyecto para su uso local.
