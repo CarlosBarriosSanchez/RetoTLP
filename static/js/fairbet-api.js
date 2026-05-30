@@ -100,15 +100,38 @@
     get: (path) => request("GET", path),
     post: (path, body) => request("POST", path, body),
 
-    register: (payload) => request("POST", "/api/users/register/", payload),
+   register: (payload) => request("POST", "/api/users/register/", payload),
     login: (username, password) =>
       request("POST", "/api/users/login/", { username, password }),
     me: () => request("GET", "/api/users/me/"),
     verifyKyc: () => request("POST", "/api/users/verify-kyc/", {}),
+
+    balance: () => request("GET", "/api/wallet/balance/"),
+    deposit: (monto) => request("POST", "/api/wallet/deposit/", { monto }),
+    withdraw: (monto) => request("POST", "/api/wallet/withdraw/", { monto }),
+    transfer: (destino_username, monto) =>
+      request("POST", "/api/wallet/transfer/", { destino_username, monto }),
+    bonusWelcomeStatus: () => request("GET", "/api/wallet/bonus/welcome/"),
+    bonusWelcomeClaim: () =>
+      request("POST", "/api/wallet/bonus/welcome/", { aceptar_terminos: true }),
+
     selfExclude: (payload) => request("POST", "/api/users/self-exclude/", payload),
     updateDailyLimit: (limite) =>
       request("POST", "/api/users/limits/daily/", { limite_deposito_diario: limite }),
     updateLimits: (payload) => request("POST", "/api/users/limits/daily/", payload),
+
+    events: () => request("GET", "/api/events/"),
+    placeBet: (payload) => request("POST", "/api/bets/", payload),
+    placeCombined: (payload) => request("POST", "/api/bets/combined/", payload),
+    cashout: (apuestaId) => request("POST", "/api/bets/" + apuestaId + "/cashout/", {}),
+    myBets: () => request("GET", "/api/bets/mine/"),
+
+    operadorDashboard: () => request("GET", "/api/operador/dashboard/"),
+    verificarAuditoria: () => request("GET", "/api/operador/auditoria/verificar/"),
+    alertasFraude: () => request("GET", "/api/operador/alertas/"),
+    reporteMinceturUrl: function (anio, mes) {
+      return "/api/operador/reporte-mincetur/?anio=" + anio + "&mes=" + mes;
+    },
   };
 
   global.FairBetAPI = api;
