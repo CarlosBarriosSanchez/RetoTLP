@@ -1,16 +1,98 @@
 {% extends "base.html" %}
-{% block title %}FairBet Lab — Inicio{% endblock %}
+{% load static %}
+{% block title %}FairBet Lab — Simulador educativo{% endblock %}
 {% block content %}
-<main style="max-width:720px;margin:2rem auto;font-family:sans-serif;">
-  <h1>FairBet Lab</h1>
-  <p>Simulador educativo de apuestas con <strong>moneda virtual</strong>.</p>
-  <ul>
-    <li><a href="/api/health/">Estado del API</a></li>
-    <li><a href="/api/">Eventos (JSON)</a></li>
-    <li><a href="/admin/">Panel administrador</a></li>
-  </ul>
-  <p style="background:#fff3cd;padding:1rem;border-radius:8px;">
-    <strong>Juego responsable:</strong> usa límites de recarga y apuesta solo con fines educativos.
-  </p>
-</main>
+
+<section class="home-hero">
+  <div class="home-hero-copy">
+    <span class="hero-badge">Moneda virtual · Sin dinero real</span>
+    <h1>Aprende cómo funciona una plataforma de apuestas, sin riesgo</h1>
+    <p>
+      FairBet Lab simula registro con KYC, cartera con partida doble, apuestas
+      simples y combinadas, cuotas en vivo y panel de operador. Todo con soles
+      ficticios (S/) para fines educativos.
+    </p>
+    <div class="home-cta-row" id="home-cta">
+      <a href="/cuenta/" class="btn btn-primary">Crear cuenta</a>
+      <a href="/eventos/" class="btn btn-outline">Ver partidos</a>
+    </div>
+  </div>
+
+  <aside class="hero-ticket" id="home-preview" aria-label="Vista previa de cuotas">
+    <div class="ticket-top">
+      <span>Próximos partidos</span>
+      <strong id="home-preview-count">—</strong>
+    </div>
+    <h2>Cuotas destacadas</h2>
+    <ul class="home-preview-list" id="home-preview-list">
+      <li class="ticket-empty">Cargando eventos…</li>
+    </ul>
+    <div class="ticket-total">
+      <span>Ir al listado completo</span>
+      <strong><a href="/eventos/" style="color:inherit">Eventos →</a></strong>
+    </div>
+  </aside>
+</section>
+
+<div class="home-status" id="home-api-status" role="status">
+  <span class="home-status-dot" id="home-status-dot" aria-hidden="true"></span>
+  <span id="home-status-text">Comprobando API…</span>
+</div>
+
+<section class="home-flow card">
+  <h2>Cómo probar la demo en 3 pasos</h2>
+  <div class="flow-grid">
+    <div>
+      <span>1</span>
+      <strong>Regístrate y verifica KYC</strong>
+      <p>Crea tu cuenta con DNI simulado y activa la verificación demo.</p>
+    </div>
+    <div>
+      <span>2</span>
+      <strong>Recarga tu cartera</strong>
+      <p>Deposita soles virtuales respetando tus límites de juego responsable.</p>
+    </div>
+    <div>
+      <span>3</span>
+      <strong>Apuesta y revisa resultados</strong>
+      <p>Elige cuotas en Eventos, confirma el boleto y sigue tus apuestas.</p>
+    </div>
+  </div>
+</section>
+
+<section class="home-features">
+  <article class="home-feature-card">
+    <h3>Usuarios y KYC</h3>
+    <p>Registro, token de sesión, autoexclusión y límites diarios/semanales/mensuales.</p>
+  </article>
+  <article class="home-feature-card">
+    <h3>Cartera contable</h3>
+    <p>Saldo calculado por partida doble. Recargas, retiros y bonos con rollover.</p>
+  </article>
+  <article class="home-feature-card">
+    <h3>Apuestas e in-play</h3>
+    <p>Mercados 1X2, combinadas, cash-out y cuotas en vivo por WebSocket.</p>
+  </article>
+  <article class="home-feature-card">
+    <h3>Auditoría y operador</h3>
+    <p>Cadena SHA256, alertas anti-fraude y dashboard GGR para staff.</p>
+  </article>
+  <article class="home-feature-card">
+    <h3>API REST</h3>
+    <p>Endpoints JSON documentados en <a href="/api/health/">/api/health/</a>.</p>
+  </article>
+  <article class="home-feature-card">
+    <h3>Mobile-first</h3>
+    <p>Interfaz pensada primero para pantallas pequeñas (&lt; 640 px).</p>
+  </article>
+</section>
+
+<div class="alert alert-info">
+  <strong>Juego responsable:</strong> esta plataforma no acepta dinero real.
+  Usa límites personales y trátala solo como material de aprendizaje.
+</div>
+
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'js/fairbet-home.js' %}"></script>
 {% endblock %}
